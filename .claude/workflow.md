@@ -10,7 +10,7 @@
 |------|------|
 | 课程 | MIT 14.01 Principles of Microeconomics, Fall 2018 |
 | 开始时间 | 2026-03-28 |
-| 目标完成 | 2026-06-20（约12周） |
+| 目标完成 | 2026-06-25（约13周，每周二周四各2小时） |
 | 工作区路径 | `/Users/yaohaizhou/Documents/code/Principles_of_Microeconomics_MIT/` |
 | GitHub Repo | `git@github.com:yaohaizhou/Principles_of_Microeconomics_MIT_Learning_Notes.git` |
 | NotebookLM Notebook | MIT 14.01 微观经济学原理 (Fall 2018) |
@@ -43,7 +43,55 @@
 python3.11 -m notebooklm ask "问题内容" --notebook 78c7f9dc-c30e-4f03-a2e8-60df4a626b21
 ```
 
-### 第三步：整理笔记并同步 GitHub
+### 第三步：生成可视化学习资料（每讲完成后）
+
+每学完一讲，用 NotebookLM 生成两种可视化资料，存入 `notes/assets/L##/`：
+
+**Infographic（卡通插画风，易于记忆）：**
+```bash
+# 获取该讲的 source ID（从 source list 中找）
+python3.11 -m notebooklm source list --notebook 78c7f9dc-c30e-4f03-a2e8-60df4a626b21 --json
+
+# 生成 kawaii 风格 infographic（异步，需等待）
+python3.11 -m notebooklm generate infographic \
+  -s <source_id> --style kawaii \
+  --notebook 78c7f9dc-c30e-4f03-a2e8-60df4a626b21 --json
+
+# 等待完成后下载（用 artifact_id）
+python3.11 -m notebooklm artifact wait <artifact_id> -n 78c7f9dc-c30e-4f03-a2e8-60df4a626b21
+python3.11 -m notebooklm download infographic notes/assets/L##/infographic_kawaii.png \
+  -a <artifact_id> -n 78c7f9dc-c30e-4f03-a2e8-60df4a626b21
+```
+
+**Mind Map（思维导图，结构化梳理）：**
+```bash
+# 生成（同步，即时完成）
+python3.11 -m notebooklm generate mind-map \
+  -s <source_id> --notebook 78c7f9dc-c30e-4f03-a2e8-60df4a626b21 --json
+
+# 下载（用 artifact_id，注意多讲时指定 ID 避免下错）
+python3.11 -m notebooklm download mind-map notes/assets/L##/mindmap.json \
+  -a <artifact_id> -n 78c7f9dc-c30e-4f03-a2e8-60df4a626b21
+```
+
+生成后在 `notes/L##.md` 的"关键图形"区块嵌入：
+```markdown
+## 关键图形
+
+### NotebookLM Infographic
+![L## Infographic - Kawaii](assets/L##/infographic_kawaii.png)
+
+### 视频截图
+[▶ 视频跳转（MM:SS）](https://youtu.be/VIDEO_ID?t=SECONDS)
+![概念名称](assets/L##/screenshot_name.png)
+```
+
+**注意事项：**
+- Infographic 生成时间约 5-10 分钟，建议用后台 agent 等待
+- 同时生成多个 mind map 时，download 须用 `-a <artifact_id>` 指定，避免下到错误的版本
+- 视频截图由用户手动截取（`Shift+Cmd+4`），保存到 `notes/assets/L##/` 后告知 Claude 嵌入
+
+### 第四步：整理笔记并同步 GitHub
 每学完一讲（或每周末），将笔记推送到 GitHub：
 
 ```bash
@@ -106,12 +154,17 @@ python3.11 -m notebooklm generate quiz --notebook 78c7f9dc-c30e-4f03-a2e8-60df4a
 ```
 Principles_of_Microeconomics_MIT/
 ├── .claude/
-│   └── workflow.md        ← 本文件，学习工作流说明
+│   └── workflow.md           ← 本文件，学习工作流说明
 ├── notes/
-│   ├── _模板.md           ← 笔记模板（新建讲座时参考）
-│   ├── L01.md             ← 各讲座笔记（L01-L25）
-│   └── ...
-└── 学习规划.md            ← 12周进度总览 + 公式速查表
+│   ├── _模板.md              ← 笔记模板（新建讲座时参考）
+│   ├── L01.md                ← 各讲座笔记（L01-L25）
+│   ├── ...
+│   └── assets/
+│       └── L##/
+│           ├── infographic_kawaii.png  ← NotebookLM 生成的 kawaii 插画
+│           ├── mindmap.json            ← NotebookLM 生成的思维导图
+│           └── *.png                   ← 视频截图（手动截取）
+└── 学习规划.md               ← 13周进度总览 + 公式速查表
 ```
 
 ---
@@ -122,6 +175,7 @@ Principles_of_Microeconomics_MIT/
 
 1. **协助填写笔记**：用户说"帮我整理 L## 的笔记"时，读取对应的 `notes/L##.md`，结合 NotebookLM 查询内容填充。
 2. **调用 NotebookLM**：使用 `python3.11 -m notebooklm` 而非 `notebooklm`（避免 Python 3.9 兼容问题）。
-3. **同步 GitHub**：帮用户 commit 和 push 时，遵循上述 commit message 规范。
-4. **更新进度**：学完一讲后，同步修改 `学习规划.md` 中的进度表。
-5. **不要修改模板**：`notes/_模板.md` 只作参考，不直接修改。
+3. **生成可视化资料**：每讲完成后，按第三步流程生成 infographic + mind map，嵌入笔记；infographic 用后台 agent 等待，避免阻塞主对话。
+4. **同步 GitHub**：帮用户 commit 和 push 时，遵循上述 commit message 规范。
+5. **更新进度**：学完一讲后，同步修改 `学习规划.md` 中的进度表。
+6. **不要修改模板**：`notes/_模板.md` 只作参考，不直接修改。
