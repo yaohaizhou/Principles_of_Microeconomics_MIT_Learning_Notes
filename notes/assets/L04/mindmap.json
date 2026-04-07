@@ -1,0 +1,152 @@
+{
+  "name": "Consumer Choice and Demand Curves",
+  "children": [
+    {
+      "name": "Deriving Demand Curves",
+      "children": [
+        {
+          "name": "Utility Maximization",
+          "children": [
+            {
+              "name": "Utility Function"
+            },
+            {
+              "name": "Budget Constraint"
+            },
+            {
+              "name": "Tangency Point"
+            }
+          ]
+        },
+        {
+          "name": "Price Changes",
+          "children": [
+            {
+              "name": "Price Increase (Steeper Slope)"
+            },
+            {
+              "name": "Price Decrease (Flatter Slope)"
+            },
+            {
+              "name": "Shift in Quantity Demanded"
+            }
+          ]
+        },
+        {
+          "name": "Downward-Sloping Relationship",
+          "children": [
+            {
+              "name": "Price vs. Quantity"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Elasticity of Demand",
+      "children": [
+        {
+          "name": "Definition",
+          "children": [
+            {
+              "name": "Percentage Change in Quantity"
+            },
+            {
+              "name": "Percentage Change in Price"
+            }
+          ]
+        },
+        {
+          "name": "Determinant",
+          "children": [
+            {
+              "name": "Substitutability"
+            }
+          ]
+        },
+        {
+          "name": "Extremes",
+          "children": [
+            {
+              "name": "Perfectly Inelastic (Vertical)"
+            },
+            {
+              "name": "Perfectly Elastic (Horizontal)"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Income and Demand",
+      "children": [
+        {
+          "name": "Engel Curve",
+          "children": [
+            {
+              "name": "Income vs. Quantity Relationship"
+            },
+            {
+              "name": "Income Elasticity of Demand"
+            }
+          ]
+        },
+        {
+          "name": "Types of Goods",
+          "children": [
+            {
+              "name": "Normal Goods (Positive Elasticity)"
+            },
+            {
+              "name": "Inferior Goods (Negative Elasticity)"
+            },
+            {
+              "name": "Luxuries (Elasticity > 1)"
+            },
+            {
+              "name": "Necessities (Elasticity < 1)"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Decomposing Price Effects",
+      "children": [
+        {
+          "name": "Substitution Effect",
+          "children": [
+            {
+              "name": "Constant Utility (Compensated Demand)"
+            },
+            {
+              "name": "Always Negative"
+            }
+          ]
+        },
+        {
+          "name": "Income Effect",
+          "children": [
+            {
+              "name": "Constant Prices"
+            },
+            {
+              "name": "Change in Effective Purchasing Power"
+            }
+          ]
+        },
+        {
+          "name": "Giffen Goods",
+          "children": [
+            {
+              "name": "Upward-Sloping Demand Curve"
+            },
+            {
+              "name": "Income Effect Dominates Substitution Effect"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
